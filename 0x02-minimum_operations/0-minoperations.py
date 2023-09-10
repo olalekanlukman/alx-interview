@@ -19,6 +19,4 @@ def minOperations(n):
 
     return operations
 
-# Example usage
-n = 9
-print(minOperations(n))  # Output: 6
+
