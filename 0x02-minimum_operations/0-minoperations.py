@@ -2,7 +2,7 @@
 """ Module for 0-minoperations"""
 
 
-def minOperaions(n):
+def minOperations(n):
     """
     minOperations
     Gets fewest # of operations needed to result in exactly n H characters
