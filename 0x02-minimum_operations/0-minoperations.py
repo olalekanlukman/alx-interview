@@ -2,20 +2,24 @@
 """ Module for 0-minoperations"""
 
 
-def minOperations(n):
-    if n <= 1:
-        return n
-    
-    # Initialize an array to store the minimum operations required for each position
-    dp = [0] * (n + 1)
-    
-    # Start from position 2 (first H already exists)
-    for i in range(2, n + 1):
-        dp[i] = i  # Default to just pasting i times
-        
-        # Try all possible factors of i
-        for j in range(2, int(i ** 0.5) + 1):
-            if i % j == 0:
-                dp[i] = min(dp[i], dp[j] + i // j)
-    
-    return dp[n]
+def minOperaions(n):
+    """
+    minOperations
+    Gets fewest # of operations needed to result in exactly n H characters
+    """
+    H_count = 1
+    copy = 0
+    command_count = 0
+
+    for i in range(0, n):
+
+        if H_count == n:
+            return command_count
+        if n % H_count == 0:
+            copy = H_count
+            H_count += copy
+            command_count += 2
+        else:
+            H_count += copy
+            command_count += 1
+    return command_count
