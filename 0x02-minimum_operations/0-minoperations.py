@@ -2,17 +2,21 @@
 """ Module for 0-minoperations"""
 
 def minOperations(n):
-    """
-    minOperations
-    Gets fewest # of operations needed to result in exactly n H characters
-    """
     if n == 1:
         return 0
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return i + minOperations(n // i)
-    return n
+    if n <= 0 or n % 1 != 0:
+        return 0
 
+    operations = 0
+    i = 2
+
+    while n > 1:
+        while n % i == 0:
+            operations += i
+            n = n // i
+        i += 1
+
+    return operations
 
 
 # def minOperations(n):
