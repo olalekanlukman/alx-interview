@@ -14,29 +14,40 @@ def isWinner(x, nums):
                 return False
         return True
 
-    # Function to play the game
-    def play_game(n):
-        primes = [i for i in range(2, n + 1) if is_prime(i)]
-        turn = 0  # 0 for Maria, 1 for Ben
-        while primes:
-            prime = primes.pop(0)
-            primes = [p for p in primes if p % prime != 0]
-            turn = 1 - turn
-        return "Maria" if turn else "Ben"
-
     maria_wins = 0
     ben_wins = 0
 
     for n in nums:
-        winner = play_game(n)
-        if winner == "Maria":
-            maria_wins += 1
-        elif winner == "Ben":
-            ben_wins += 1
+        # Build a set of numbers that have not been picked yet
+        remaining = set(range(2, n + 1))
+        turn = 'Maria'
 
+        while True:
+            # Find the next prime number
+            prime = 0
+            for num in remaining:
+                if is_prime(num):
+                    prime = num
+                    break
+            
+            # If no prime number is found, the current player loses
+            if prime == 0:
+                if turn == 'Maria':
+                    ben_wins += 1
+                else:
+                    maria_wins += 1
+                break
+
+            # Remove the prime number and its multiples from the remaining set
+            remaining -= set(prime * i for i in range(1, n // prime + 1))
+
+            # Switch the turn
+            turn = 'Ben' if turn == 'Maria' else 'Maria'
+
+    # Determine the winner
     if maria_wins > ben_wins:
-        return "Maria"
+        return 'Maria'
     elif ben_wins > maria_wins:
-        return "Ben"
+        return 'Ben'
     else:
         return None
