@@ -2,24 +2,26 @@
 """ Module for 0-minoperations"""
 
 
+
+
 def minOperations(n):
     """
     minOperations
     Gets fewest # of operations needed to result in exactly n H characters
     """
-    # all outputs should be at least 2 char: (min, Copy All => Paste)
-    if (n < 2):
-        return 0
-    ops, root = 0, 2
-    while root <= n:
-        # if n evenly divides by root
-        if n % root == 0:
-            # total even-divisions by root = total operations
-            ops += root
-            # set n to the remainder
-            n = n / root
-            # reduce root to find remaining smaller vals that evenly-divide n
-            root -= 1
-        # increment root until it evenly-divides n
-        root += 1
-    return ops
+    H_count = 1
+    copy = 0
+    command_count = 0
+
+    for i in range(0, n):
+
+        if H_count == n:
+            return command_count
+        if n % H_count == 0:
+            copy = H_count
+            H_count += copy
+            command_count += 2
+        else:
+            H_count += copy
+            command_count += 1
+    return command_count
