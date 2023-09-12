@@ -12,18 +12,16 @@ def makeChange(coins, total):
     if total <= 0:
         return 0
 
-    # Initialize a DP array with a size of total + 1, and fill it with a value greater than the maximum possible total
+    # Initialize a list with values set to a large number (greater than the maximum possible value)
     dp = [float('inf')] * (total + 1)
-    # Base case: 0 coins are needed to make a total of 0
+    
+    # Base case: 0 coins are needed to make change for amount 0
     dp[0] = 0
 
-    # Iterate through the coins and the DP array to calculate the minimum number of coins needed for each total
+    # Iterate through the coins and the possible totals
     for coin in coins:
-        for amount in range(coin, total + 1):
-            dp[amount] = min(dp[amount], dp[amount - coin] + 1)
+        for i in range(coin, total + 1):
+            # Update the minimum number of coins needed to make change for amount i
+            dp[i] = min(dp[i], dp[i - coin] + 1)
 
-    # If it's not possible to make the given total, return -1
-    if dp[total] == float('inf'):
-        return -1
-    return dp[total]
-
+    return dp[total] if dp[total] != float('inf') else -1
